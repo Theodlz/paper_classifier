@@ -5,7 +5,8 @@ import Paper from "../../models/paper";
 export default async (req, res) => {
   await connectDB();
   if (req.method === "GET") {
-      const { page, nbPerPage } = req.query;
+      // grab the page and nbPerPage from the query, with default values 0 and 10
+      const { page = 1, nbPerPage = 10 } = req.query;
       // query the database for papers using the page and nbPerPage
       const paper = await Paper.find()
         .skip((page - 1) * nbPerPage)
