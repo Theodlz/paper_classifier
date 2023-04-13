@@ -87,10 +87,9 @@ export default function Home({}) {
         </div>
        <ul>
           {papers.map((paper) => (
-            // hide the bullet points
-            
             <li key={paper.title} className={styles.paper}>
               <h4>{paper.index}. {paper.title}</h4>
+              <p>{paper.authors.join(", ")}</p>
               <p>{paper.abstract}</p>
               <a className={styles.link} href={paper.url}> {paper.url}</a>
               <div className={styles.classifications}>

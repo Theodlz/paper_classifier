@@ -3,6 +3,7 @@ import mongoose from "mongoose";
 const PaperSchema = new mongoose.Schema({
     title: String,
     abstract: String,
+    authors: [String],
     url: String,
     classifications: [String],
 });
