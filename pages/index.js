@@ -2,11 +2,32 @@ import Head from "next/head";
 import React from "react";
 import styles from "../styles/Home.module.css";
 
+import io from "socket.io-client";
+let socket
+
 export default function Home({}) {
   const [papers, setPapers] = React.useState([]);
   const [page, setPage] = React.useState(1);
   const [nbPerPage, setNbPerPage] = React.useState(10);
   const [allClassifications, setAllClassifications] = React.useState([]);
+
+  const socketInitializer = async () => {
+    await fetch('/api/socket')
+    socket = io()
+
+    socket.on('connect', () => {
+      console.log('connected');
+    })
+
+    socket.on("disconnect", () => {
+      // try to reconnect in 5 seconds
+      setTimeout(socketInitializer, 5000)
+    })
+
+    socket.on('paper-updated', msg => {
+        getPapers({ page, nbPerPage })
+    })
+  }
 
   const getAllClassifications = async ({}) => {
     const res = await fetch(`/api/classification`);
@@ -29,10 +50,11 @@ export default function Home({}) {
       body: JSON.stringify({ title, classifications }),
     });
     await res.json();
-    getPapers({ page, nbPerPage });
+    socket.emit('paper-updated', { id: papers.find(paper => paper.title === title)?._id })
   };
 
   React.useEffect(() => {
+    socketInitializer();
     getAllClassifications();
   }, []);
 
