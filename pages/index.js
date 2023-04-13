@@ -67,7 +67,7 @@ export default function Home({}) {
             <li key={paper.title}>
               <h4>{paper.title}</h4>
               <p>{paper.abstract}</p>
-              <p>{paper.url}</p>
+              <a className={styles.link} href={paper.url}> {paper.url}</a>
               <div className={styles.classifications}>
                 {allClassifications.map((classification) => (
                   <div key={classification}>
