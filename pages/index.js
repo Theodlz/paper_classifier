@@ -93,7 +93,7 @@ export default function Home({}) {
               <p>{paper.abstract}</p>
               <a className={styles.link} href={paper.url}> {paper.url}</a>
               <div className={styles.classifications}>
-                {allClassifications.map((classification) => (
+                {allClassifications.slice(0, 5).map((classification) => (
                   <div key={classification}>
                     <input type="checkbox" id={classification} name={classification} value={classification}
                       checked={paper.classifications.includes(classification)}
@@ -109,6 +109,23 @@ export default function Home({}) {
                   </div>
                 ))}
               </div>
+              <div className={styles.classifications}>
+              {allClassifications.slice(5, allClassifications?.length).map((classification) => (
+                  <div key={classification}>
+                    <input type="checkbox" id={classification} name={classification} value={classification}
+                      checked={paper.classifications.includes(classification)}
+                      onChange={(e) => {
+                        const newClassifications = paper.classifications.includes(classification)
+                          ? paper.classifications.filter((c) => c !== classification)
+                          : [...paper.classifications, classification];
+                        submitClassification({ title: paper.title, classifications: newClassifications });
+                      }}
+                    />
+                        
+                    <label htmlFor={classification}>{classification}</label>
+                  </div>
+                ))}
+              </div>              
             </li>
           ))}
           {papers.length === 0 && <li>No papers found for page {page} and nbPerPage {nbPerPage}</li>}
