@@ -93,7 +93,7 @@ export default function Home({}) {
               <p>{paper.abstract}</p>
               <a className={styles.link} href={paper.url}> {paper.url}</a>
               <div className={styles.classifications}>
-                {allClassifications.slice(0, 5).map((classification) => (
+                {allClassifications.slice(0, 6).map((classification) => (
                   <div key={classification}>
                     <input type="checkbox" id={classification} name={classification} value={classification}
                       checked={paper.classifications.includes(classification)}
@@ -110,7 +110,7 @@ export default function Home({}) {
                 ))}
               </div>
               <div className={styles.classifications}>
-              {allClassifications.slice(5, allClassifications?.length).map((classification) => (
+              {allClassifications.slice(6, allClassifications?.length).map((classification) => (
                   <div key={classification}>
                     <input type="checkbox" id={classification} name={classification} value={classification}
                       checked={paper.classifications.includes(classification)}
