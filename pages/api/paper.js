@@ -39,9 +39,9 @@ export default async (req, res) => {
         const newPaper = new Paper(content);
         await newPaper.save();
       }
-      res.status(200).json({ message: "Paper page updated" });
+      res.status(200).json({ message: "Paper updated" });
     } catch (error) {
-      res.status(400).json({ message: "Error updating paper page" });
+      res.status(400).json({ message: "Error updating paper" });
     }
   }
 };
