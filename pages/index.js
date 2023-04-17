@@ -94,7 +94,7 @@ export default function Home({}) {
               <a className={styles.link} href={paper.url}> {paper.url}</a>
               <div className={styles.classifications}>
                 <div className={styles.classificationLevel}>
-                  <h3 className={styles.level}>Level 1</h3>
+                  <h4 className={styles.level}>Relevant to ZTF:</h4>
                   {allClassifications.slice(0, 2).map((classification) => (
                     <div key={classification}>
                       <input type="checkbox" id={classification} name={classification} value={classification}
@@ -112,7 +112,7 @@ export default function Home({}) {
                   ))}
                 </div>
                 <div className={styles.classificationLevel}>
-                  <h4 className={styles.level}>Level 2</h4>
+                  <h4 className={styles.level}>Makes use of ZTF:</h4>
                   {allClassifications.slice(2, 6).map((classification) => (
                       <div key={classification}>
                         <input type="checkbox" id={classification} name={classification} value={classification}
@@ -129,7 +129,7 @@ export default function Home({}) {
                     ))}
                 </div> 
                 <div className={styles.classificationLevel}>
-                  <h5 className={styles.level}>Level 3</h5>
+                  <h4 className={styles.level}>Field:</h4>
                   {allClassifications.slice(6, allClassifications?.length).map((classification) => (
                     <div key={classification}>
                     <input type="checkbox" id={classification} name={classification} value={classification}
