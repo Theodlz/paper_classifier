@@ -23,9 +23,19 @@
 
 .classifications {
   display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 0rem;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  margin-top: 1rem;
+}
+
+.classificationLevel {
+  display: flex;
   flex-direction: row;
   justify-content: flex-start;
-  gap: 1rem;
+  gap: 0.75rem;
   align-items: center;
   flex-wrap: wrap;
   margin-top: 1rem;
@@ -48,4 +58,28 @@
 
 .paper {
   list-style: none;
+}
+
+.papers {
+  margin-left: 2rem;
+  margin-right: 2rem;
+  padding-inline-start: 0;
+}
+
+.paperText {
+  text-align: justify;
+}
+
+.divider {
+  margin: 0.5rem 0;
+  height: 1px;
+  min-width: 100%;
+  color: grey;
+  background-color: grey;
+}
+
+.level {
+  margin-block-start: 0;
+  margin-block-end: 0;
+
 }

@@ -85,16 +85,53 @@ export default function Home({}) {
           Papers per page:
           <input type="number" value={nbPerPage} onChange={(e) => (!isNaN(e.target.value) && e.target.value >= 0 && e.target.value <= 100) && setNbPerPage(parseInt(e.target.value))} />
         </div>
-       <ul>
+       <ul className={styles.papers}>
           {papers.map((paper) => (
             <li key={paper.title} className={styles.paper}>
               <h4>{paper.index}. {paper.title}</h4>
               <p>{paper.authors.join(", ")}</p>
-              <p>{paper.abstract}</p>
+              <p className={styles.paperText}>{paper.abstract}</p>
               <a className={styles.link} href={paper.url}> {paper.url}</a>
               <div className={styles.classifications}>
-                {allClassifications.slice(0, 6).map((classification) => (
-                  <div key={classification}>
+                <div className={styles.classificationLevel}>
+                  <h3 className={styles.level}>Level 1</h3>
+                  {allClassifications.slice(0, 2).map((classification) => (
+                    <div key={classification}>
+                      <input type="checkbox" id={classification} name={classification} value={classification}
+                        checked={paper.classifications.includes(classification)}
+                        onChange={(e) => {
+                          const newClassifications = paper.classifications.includes(classification)
+                            ? paper.classifications.filter((c) => c !== classification)
+                            : [...paper.classifications, classification];
+                          submitClassification({ title: paper.title, classifications: newClassifications });
+                        }}
+                      />
+                          
+                      <label htmlFor={classification}>{classification}</label>
+                    </div>
+                  ))}
+                </div>
+                <div className={styles.classificationLevel}>
+                  <h4 className={styles.level}>Level 2</h4>
+                  {allClassifications.slice(2, 6).map((classification) => (
+                      <div key={classification}>
+                        <input type="checkbox" id={classification} name={classification} value={classification}
+                          checked={paper.classifications.includes(classification)}
+                          onChange={(e) => {
+                            const newClassifications = paper.classifications.includes(classification)
+                              ? paper.classifications.filter((c) => c !== classification)
+                              : [...paper.classifications, classification];
+                            submitClassification({ title: paper.title, classifications: newClassifications });
+                          }}
+                        />
+                        <label htmlFor={classification}>{classification}</label>
+                      </div>
+                    ))}
+                </div> 
+                <div className={styles.classificationLevel}>
+                  <h5 className={styles.level}>Level 3</h5>
+                  {allClassifications.slice(6, allClassifications?.length).map((classification) => (
+                    <div key={classification}>
                     <input type="checkbox" id={classification} name={classification} value={classification}
                       checked={paper.classifications.includes(classification)}
                       onChange={(e) => {
@@ -104,29 +141,14 @@ export default function Home({}) {
                         submitClassification({ title: paper.title, classifications: newClassifications });
                       }}
                     />
-                        
                     <label htmlFor={classification}>{classification}</label>
                   </div>
-                ))}
+                  ))}
+                </div>
               </div>
-              <div className={styles.classifications}>
-              {allClassifications.slice(6, allClassifications?.length).map((classification) => (
-                  <div key={classification}>
-                    <input type="checkbox" id={classification} name={classification} value={classification}
-                      checked={paper.classifications.includes(classification)}
-                      onChange={(e) => {
-                        const newClassifications = paper.classifications.includes(classification)
-                          ? paper.classifications.filter((c) => c !== classification)
-                          : [...paper.classifications, classification];
-                        submitClassification({ title: paper.title, classifications: newClassifications });
-                      }}
-                    />
-                        
-                    <label htmlFor={classification}>{classification}</label>
-                  </div>
-                ))}
-              </div>              
+              <div className={styles.divider} />
             </li>
+            // show a divider that takes the full width of the page
           ))}
           {papers.length === 0 && <li>No papers found for page {page} and nbPerPage {nbPerPage}</li>}
        </ul>
