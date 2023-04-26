@@ -26,6 +26,7 @@ export default function Home({}) {
     })
 
     socket.on('paper-updated', msg => {
+      console.log('paper-updated', msg);
       setRefresh(msg)
     })
   }
@@ -68,6 +69,7 @@ export default function Home({}) {
   React.useEffect(() => {
     if (refresh != null && papers) {
       const paper = papers.find(paper => paper._id === refresh.id)
+      console.log(paper)
       if (paper) {
         paper.classifications = refresh.classifications
         setPapers([...papers])
