@@ -10,6 +10,7 @@ export default function Home({}) {
   const [page, setPage] = React.useState(1);
   const [nbPerPage, setNbPerPage] = React.useState(10);
   const [allClassifications, setAllClassifications] = React.useState([]);
+  const [refresh, setRefresh] = React.useState(false);
 
   const socketInitializer = async () => {
     await fetch('/api/socket')
@@ -25,7 +26,7 @@ export default function Home({}) {
     })
 
     socket.on('paper-updated', msg => {
-        getPapers({ page, nbPerPage })
+      setRefresh(true)
     })
   }
 
@@ -64,6 +65,13 @@ export default function Home({}) {
       getPapers({ page, nbPerPage });
     }
   }, [page, nbPerPage]);
+
+  React.useEffect(() => {
+    if (refresh) {
+      getPapers({ page, nbPerPage });
+      setRefresh(false)
+    }
+  }, [refresh]);
   
 
   return (
