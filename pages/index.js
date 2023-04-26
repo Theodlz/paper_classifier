@@ -52,7 +52,6 @@ export default function Home({}) {
     });
     await res.json();
     socket.emit('paper-updated', { id: papers.find(paper => paper.title === title)?._id })
-    getPapers({ page, nbPerPage })
   };
 
   React.useEffect(() => {
