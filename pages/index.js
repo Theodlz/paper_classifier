@@ -26,7 +26,7 @@ export default function Home({}) {
     })
 
     socket.on('paper-updated', msg => {
-      setRefresh(true)
+      setRefresh(msg)
     })
   }
 
@@ -51,7 +51,7 @@ export default function Home({}) {
       body: JSON.stringify({ title, classifications }),
     });
     await res.json();
-    socket.emit('paper-updated', { id: papers.find(paper => paper.title === title)?._id })
+    socket.emit('paper-updated', { id: papers.find(paper => paper.title === title)?._id, classifications })
   };
 
   React.useEffect(() => {
@@ -66,9 +66,13 @@ export default function Home({}) {
   }, [page, nbPerPage]);
 
   React.useEffect(() => {
-    if (refresh) {
-      getPapers({ page, nbPerPage });
-      setRefresh(false)
+    if (refresh != null && papers) {
+      const paper = papers.find(paper => paper._id === refresh.id)
+      if (paper) {
+        paper.classifications = refresh.classifications
+        setPapers([...papers])
+      }
+      setRefresh(null)
     }
   }, [refresh]);
   
