@@ -53,7 +53,13 @@ export default function Home({}) {
     });
     await res.json();
     socket.emit('paper-updated', { id: papers.find(paper => paper.title === title)?._id, classifications })
-    getPapers({ page, nbPerPage });
+    // update the list of papers
+    setPapers(papers.map(paper => {
+      if (paper.title === title) {
+        paper.classifications = classifications
+      }
+      return paper
+    }))
   };
 
   React.useEffect(() => {
